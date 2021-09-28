@@ -11,6 +11,9 @@ app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000/'); 
 });
 
+// middleware $ static files
+app.use(express.static('public'));
+
 app.get('/', (req, res) => {
     const blogs = [
         {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
