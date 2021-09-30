@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const Blog = require('./models/blog');
 
 // express app
 const app = express();
@@ -19,6 +20,34 @@ app.set('view engine', 'ejs');
 // middleware & static files
 app.use(express.static('public'));
 
+// mongoose and mongo sandbox routes
+app.get('/add-blog', (req, res) => {
+    const blog = new Blog({
+        title: 'Moonlight Dancing',
+        snippet: 'About second journey',
+        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quos eos eaque fugit eligendi commodi facilis error debitis doloremque nostrum!'
+    });
+
+    blog.save()
+        .then( result => {
+            res.send(result);
+        })
+        .catch( err => {
+            console.log(err.message);
+        });
+});
+
+app.get('/all-blogs', (req, res) => {
+    Blog.find()
+        .then( result => {
+            res.send(result);
+        })
+        .catch( err => {
+            console.log(err.message);
+        });
+});
+
+// routes
 app.get('/', (req, res) => {
     const blogs = [
         {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
